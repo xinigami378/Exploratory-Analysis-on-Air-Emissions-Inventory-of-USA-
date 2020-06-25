@@ -1,0 +1,6 @@
+df <- readRDS("Data/summarySCC_PM25.rds")
+df$year <- as.factor(df$year)
+Mean<- tapply(df$Emissions, df$year, mean, na.rm=TRUE)
+df$year <- as.Date(df$year, format= "%Y")
+df$year <- as.numeric(format(df$year,'%Y'))
+plot(unique(df$year),mean, type= "b", main= "Mean Emission over time", pch= 19, col= "purple", xlab= "Year")

@@ -1,0 +1,7 @@
+df <- readRDS("Data/summarySCC_PM25.rds")
+df$year <- as.factor(df$year)
+balt<- subset(df,df$fips=="24510")
+Mean<- tapply(balt$Emissions, balt$year, mean, na.rm=TRUE)
+balt$year <- as.Date(balt$year, format= "%Y")
+balt$year <- as.numeric(format(balt$year,'%Y'))
+plot(unique(balt$year),Mean, type= "b", main= "Mean Emission over Time in Baltimore", pch= 19, col= "purple", xlab= "Year")

@@ -1,0 +1,11 @@
+df <- readRDS("Data/summarySCC_PM25.rds")
+dfsource <- readRDS("Data/Source_Classification_Code.rds")
+sub <- subset(dfsource, dfsource$EI.Sector== c("Mobile - On-Road Gasoline Light Duty Vehicles", "Mobile - On-Road Gasoline Heavy Duty Vehicles", "Mobile - On-Road Diesel Light Duty Vehicles", "Mobile - On-Road Diesel Heavy Duty Vehicles"))
+sccneed <- sub[,1]
+sccneed <- as.character(sccneed)
+subM <- subset(df, df$SCC %in% sccneed)
+balt<- subset(subM,subM$fips=="24510")
+Mean<- tapply(balt$Emissions, balt$year, mean, na.rm=TRUE)
+balt$year <- as.character(balt$year)
+balt$year <- as.numeric(balt$year)
+plot(unique(balt$year),Mean, type= "b", main= "Mean Emission over Time in Baltimore by Motar Vehicles", pch= 19, col= "purple", xlab= "Year")
